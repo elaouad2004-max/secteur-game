@@ -1,0 +1,11 @@
+[
+  { "id": "3youch-lghoul",   "name": "3youch lghoul",   "photo": "characters/3youch lghoul.jpeg",   "weapon": "shot",   "color": "#c0392b" },
+  { "id": "abdelhamid",      "name": "abdelhamid",      "photo": "characters/abdelhamid.jpeg",      "weapon": "freeze", "color": "#2e86de" },
+  { "id": "achraf-ba3balla", "name": "achraf ba3balla", "photo": "characters/achraf ba3balla.jpeg", "weapon": "smoke",  "color": "#27ae60" },
+  { "id": "adam-zkika",      "name": "adam zkika",      "photo": "characters/adam zkika.jpeg",      "weapon": "dash",   "color": "#8e44ad" },
+  { "id": "ayman-moswir",    "name": "ayman moswir",    "photo": "characters/ayman moswir.jpeg",    "weapon": "shot",   "color": "#f39c12" },
+  { "id": "ilyass-borkba",   "name": "ilyass borkba",   "photo": "characters/ilyass borkba.jpeg",   "weapon": "freeze", "color": "#16a085" },
+  { "id": "jwi3in-lhbil",    "name": "jwi3in lhbil",    "photo": "characters/jwi3in lhbil.jpeg",    "weapon": "smoke",  "color": "#d35400" },
+  { "id": "qawqaw-afribaba", "name": "qawqaw afribaba", "photo": "characters/qawqaw afribaba.jpeg", "weapon": "dash",   "color": "#2c3e50" },
+  { "id": "youpi-kcheet",    "name": "youpi kcheet",    "photo": "characters/youpi kcheet.jpeg",    "weapon": "shot",   "color": "#7f8c8d" }
+]

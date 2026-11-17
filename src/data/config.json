@@ -1,0 +1,7 @@
+{
+  "tile": 2,
+  "wallHeight": 2.6,
+  "player": { "speed": 4.6, "radius": 0.4, "lives": 3 },
+  "housekeeper": { "patrolSpeed": 2.1, "chaseSpeed": 4.0, "levelSpeedBonus": 0.07, "viewRange": 7.5, "viewAngle": 0.62, "catchDistance": 0.85, "loseSightAfter": 3 },
+  "outfitColors": ["#c0392b", "#2e86de", "#27ae60", "#8e44ad", "#f39c12", "#ecf0f1", "#16a085", "#2c3e50"]
+}

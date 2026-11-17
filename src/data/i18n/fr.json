@@ -1,0 +1,29 @@
+{
+  "title": "Dar Secteur", "sub": "Reprends la maison. Ne te fais pas attraper.",
+  "play": "Jouer", "cont": "Continuer", "reset": "Réinitialiser", "confirmReset": "Effacer toute la progression ?",
+  "chars": "Choisis ton héros", "charsHint": "Les autres deviennent les gardiens maléfiques.",
+  "custom": "Personnalise ton héros", "name": "Nom", "outfit": "Tenue", "hat": "Chapeau",
+  "hats": ["Aucun", "Casquette", "Fez", "Couronne"],
+  "next": "Suivant", "back": "Retour", "levels": "Niveaux", "keys": "Clés", "need": "Requiert", "start": "Commencer",
+  "tokens": "Jetons", "weapon": "Arme", "locked": "verrouillée", "ready": "PRÊTE",
+  "caught": "Un gardien t'a attrapé !", "failed": "Attrapé trop de fois...", "retry": "Réessayer",
+  "cleared": "Niveau terminé !", "exitOpen": "Tâches finies, va à la porte !",
+  "help": "Clique pour capturer la souris · Souris : caméra · ZQSD/WASD : bouger · Maj : courir · E : interagir · Espace : arme · Échap : pause",
+  "unlockW": "Arme débloquée : ", "wInfo": "Arme spéciale (après {n} tâches) : ",
+  "taskDone": "+1 jeton", "key": "Clé trouvée !", "dead": "Les gardiens tombent en poussière !",
+  "menu": "Menu", "hero": "Changer de héros", "resume": "Reprendre", "pause": "Pause",
+  "endT": "Enfin à la maison",
+  "endS": "Les sceaux sont brisés. Tous les gardiens sont tombés en poussière et la maison est à nouveau à toi. Bienvenue chez toi.",
+  "earned": "Clés gagnées", "lang": "Langue",
+  "task": { "lantern": "Allumer la lanterne", "letter": "Lire la vieille lettre", "chest": "Ouvrir le coffre", "mirror": "Nettoyer le miroir", "seal": "Briser le sceau" },
+  "w": { "shot": "Lancer de babouche", "freeze": "Gel à la menthe", "smoke": "Bombe fumigène", "dash": "Ruée éclair" },
+  "wd": { "shot": "étourdit le premier gardien touché", "freeze": "gèle tous ceux autour de toi", "smoke": "te rend invisible", "dash": "charge et assomme-les" },
+  "lv": [
+    { "n": "La Grille", "s": "Ta maison de famille a été volée par les gardiens, tes anciens amis, maudits. Faufile-toi dans le jardin, allume les lanternes et trouve les clés." },
+    { "n": "Le Couloir", "s": "À l'intérieur, le long couloir grince. Lis les vieilles lettres pour percer le secret de la malédiction. Reste hors de leur vue." },
+    { "n": "La Cuisine", "s": "La cuisine sent le thé à la menthe brûlé. Ouvre les coffres pour récupérer les outils de ta famille." },
+    { "n": "La Bibliothèque", "s": "La bibliothèque cache le livre interdit. Nettoie les miroirs pour révéler les pages secrètes." },
+    { "n": "Le Patio du Riad", "s": "Dans le patio du riad, la fontaine murmure. Allume les lanternes pour affaiblir les gardiens." },
+    { "n": "La Chambre du Maître", "s": "La chambre du maître. Brise les quatre sceaux et la malédiction prendra fin. Puis reprends ta maison." }
+  ]
+}

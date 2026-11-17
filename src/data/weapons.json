@@ -1,0 +1,9 @@
+{
+  "unlockAfterTasks": 6,
+  "types": {
+    "shot":   { "cooldown": 7, "speed": 16, "range": 1.4, "stun": 4 },
+    "freeze": { "cooldown": 9, "radius": 7, "stun": 3.5 },
+    "smoke":  { "cooldown": 10, "invisible": 4.5 },
+    "dash":   { "cooldown": 8, "duration": 1.3, "speedMul": 2.3, "stun": 4 }
+  }
+}

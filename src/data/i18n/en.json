@@ -1,0 +1,29 @@
+{
+  "title": "Dar Secteur", "sub": "Take back the house. Don't get caught.",
+  "play": "Play", "cont": "Continue", "reset": "Reset progress", "confirmReset": "Erase all progress?",
+  "chars": "Choose your hero", "charsHint": "The others become the evil housekeepers.",
+  "custom": "Customize your hero", "name": "Name", "outfit": "Outfit", "hat": "Hat",
+  "hats": ["None", "Cap", "Fez", "Crown"],
+  "next": "Next", "back": "Back", "levels": "Levels", "keys": "Keys", "need": "Needs", "start": "Start",
+  "tokens": "Tokens", "weapon": "Weapon", "locked": "locked", "ready": "READY",
+  "caught": "A housekeeper caught you!", "failed": "You were caught too many times...", "retry": "Retry",
+  "cleared": "Level cleared!", "exitOpen": "All tasks done, reach the door!",
+  "help": "Click to lock mouse · Mouse: camera · WASD: move · Shift: run · E: interact · Space: weapon · Esc: pause",
+  "unlockW": "Weapon unlocked: ", "wInfo": "Special weapon (unlocks after {n} tasks): ",
+  "taskDone": "+1 token", "key": "Key found!", "dead": "The housekeepers turn to dust!",
+  "menu": "Menu", "hero": "Change hero", "resume": "Resume", "pause": "Paused",
+  "endT": "Home, safe at last",
+  "endS": "The seals are broken. Every housekeeper fell to dust and the house is yours again. Welcome home.",
+  "earned": "Keys earned", "lang": "Language",
+  "task": { "lantern": "Light the lantern", "letter": "Read the old letter", "chest": "Open the chest", "mirror": "Clean the mirror", "seal": "Break the seal" },
+  "w": { "shot": "Babouche Throw", "freeze": "Mint Freeze", "smoke": "Smoke Bomb", "dash": "Thunder Dash" },
+  "wd": { "shot": "stuns the first housekeeper hit", "freeze": "freezes everyone around you", "smoke": "makes you invisible", "dash": "charge and knock them out" },
+  "lv": [
+    { "n": "The Gate", "s": "Your family house was stolen by the housekeepers, your old friends, now cursed. Sneak through the garden, light the lanterns and find the keys." },
+    { "n": "The Hallway", "s": "Inside, the long hallway creaks. Read the old letters to learn the secret of the curse. Stay out of their sight." },
+    { "n": "The Kitchen", "s": "The kitchen smells of burnt mint tea. Open the chests to recover your family's tools." },
+    { "n": "The Library", "s": "The library hides the forbidden book. Clean the mirrors to reveal the hidden pages." },
+    { "n": "The Riad Courtyard", "s": "In the riad's courtyard the fountain whispers. Light the lanterns to weaken the housekeepers." },
+    { "n": "The Master's Room", "s": "The master's room. Break the four seals and the curse ends forever. Then take your home back." }
+  ]
+}
