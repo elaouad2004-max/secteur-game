@@ -1,11 +1,11 @@
 [
-  { "id": "3youch-lghoul",   "name": "3youch lghoul",   "photo": "characters/3youch lghoul.jpeg",   "weapon": "shot",   "color": "#c0392b" },
-  { "id": "abdelhamid",      "name": "abdelhamid",      "photo": "characters/abdelhamid.jpeg",      "weapon": "freeze", "color": "#2e86de" },
-  { "id": "achraf-ba3balla", "name": "achraf ba3balla", "photo": "characters/achraf ba3balla.jpeg", "weapon": "smoke",  "color": "#27ae60" },
-  { "id": "adam-zkika",      "name": "adam zkika",      "photo": "characters/adam zkika.jpeg",      "weapon": "dash",   "color": "#8e44ad" },
-  { "id": "ayman-moswir",    "name": "ayman moswir",    "photo": "characters/ayman moswir.jpeg",    "weapon": "shot",   "color": "#f39c12" },
-  { "id": "ilyass-borkba",   "name": "ilyass borkba",   "photo": "characters/ilyass borkba.jpeg",   "weapon": "freeze", "color": "#16a085" },
-  { "id": "jwi3in-lhbil",    "name": "jwi3in lhbil",    "photo": "characters/jwi3in lhbil.jpeg",    "weapon": "smoke",  "color": "#d35400" },
-  { "id": "qawqaw-afribaba", "name": "qawqaw afribaba", "photo": "characters/qawqaw afribaba.jpeg", "weapon": "dash",   "color": "#2c3e50" },
-  { "id": "youpi-kcheet",    "name": "youpi kcheet",    "photo": "characters/youpi kcheet.jpeg",    "weapon": "shot",   "color": "#7f8c8d" }
+  {"id":"3youch-lghoul","name":"3youch lghoul","photo":"characters/3youch lghoul.jpeg","weapon":"shot","color":"#c0392b","face":[0.40,0.07,0.18,0.27]},
+  {"id":"abdelhamid","name":"abdelhamid","photo":"characters/abdelhamid.jpeg","weapon":"freeze","color":"#2e86de","face":[0.27,0.17,0.46,0.52]},
+  {"id":"achraf-ba3balla","name":"achraf ba3balla","photo":"characters/achraf ba3balla.jpeg","weapon":"smoke","color":"#27ae60","face":[0.26,0.17,0.44,0.56]},
+  {"id":"adam-zkika","name":"adam zkika","photo":"characters/adam zkika.jpeg","weapon":"dash","color":"#8e44ad","face":[0.24,0.15,0.54,0.56]},
+  {"id":"ayman-moswir","name":"ayman moswir","photo":"characters/ayman moswir.jpeg","weapon":"shot","color":"#f39c12","face":[0.33,0.02,0.36,0.58]},
+  {"id":"ilyass-borkba","name":"ilyass borkba","photo":"characters/ilyass borkba.jpeg","weapon":"freeze","color":"#16a085","face":[0.26,0.14,0.5,0.6]},
+  {"id":"jwi3in-lhbil","name":"jwi3in lhbil","photo":"characters/jwi3in lhbil.jpeg","weapon":"smoke","color":"#d35400","face":[0.3,0.09,0.3,0.33]},
+  {"id":"qawqaw-afribaba","name":"qawqaw afribaba","photo":"characters/qawqaw afribaba.jpeg","weapon":"dash","color":"#2c3e50","face":[0.28,0.06,0.34,0.64]},
+  {"id":"youpi-kcheet","name":"youpi kcheet","photo":"characters/youpi kcheet.jpeg","weapon":"shot","color":"#7f8c8d","face":[0.33,0.14,0.34,0.57]}
 ]

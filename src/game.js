@@ -78,11 +78,13 @@ export class Game {
     this.clear();
     this.level = index;
     this.def = LEVELS[index];
-    this.world = new World(this.scene, this.def);
+    this.world = new World(this.scene, this.def, index);
+    const th = this.world.theme;
+    this.scene.fog.color.set(th.fog); this.scene.background.set(th.fog);
     const me = hero();
     this.player = {
       pos: this.world.start.clone(), yaw: 0, invisible: 0, dash: 0, grace: 1.5,
-      model: makeCharacter({ photo: me.photo, color: P.color, hat: P.hat }),
+      model: makeCharacter({ photo: me.photo, color: P.color, hat: P.hat, name: P.nick }),
     };
     this.scene.add(this.player.model.root);
     const evil = CHARACTERS.filter((c) => c.id !== P.char);
@@ -90,7 +92,8 @@ export class Game {
     this.tokens = 0; this.keysGot = 0; this.lives = PL.lives; this.cooldown = 0; this.cleared = false;
     this.projectiles = [];
     this.yaw = -Math.PI * 0.75; // camera behind the start corner, looking into the map
-    this.hemi.intensity = 1.1; this.scene.fog.density = 0.03;
+    this.hemi.intensity = 0.7; this.scene.fog.density = 0.03; this.danger = 0;
+    sfx.levelStart();
     this.state = 'play';
     this.keys = {};
     this.lockedOnce = false;
@@ -102,7 +105,7 @@ export class Game {
     if (!this.world) return;
     this.world.dispose();
     this.enemies.forEach((e) => e.dispose(this.scene));
-    this.scene.remove(this.player.model.root);
+    this.scene.remove(this.player.model.root); this.player.model.dispose();
     this.projectiles.forEach((p) => this.scene.remove(p.mesh));
     this.fx.forEach((f) => this.scene.remove(f.mesh));
     this.fx = []; this.world = null;
@@ -115,15 +118,29 @@ export class Game {
     this.ui.showPause();
   }
   resume() { this.state = 'play'; this.keys = {}; this.lockedOnce = false; this.ui.hud(true); }
-  quit() { this.clear(); this.state = 'idle'; document.exitPointerLock?.(); }
+  quit() { this.clear(); this.state = 'idle'; document.exitPointerLock?.(); sfx.setDanger(0); this.ui.scare(null); }
 
   // ---------------- gameplay ----------------
-  caught() {
+  /** Jumpscare: camera snaps to the housekeeper's face, then a full-screen scare, then respawn. */
+  caught(enemy) {
     this.lives--; sfx.caught();
+    this.state = 'scare'; this.scareT = 0; this.scareEnemy = enemy; this.scareShown = false;
+    enemy.yaw = Math.atan2(this.player.pos.x - enemy.pos.x, this.player.pos.z - enemy.pos.z);
+    enemy.sync(0, 0);
+    this.ui.hud(false); this.ui.danger(1);
+  }
+
+  updateScare(dt) {
+    this.scareT += dt;
+    if (this.scareT > 0.35 && !this.scareShown) { this.scareShown = true; this.ui.scare(this.scareEnemy.char.photo); }
+    if (this.scareT < 1.7) return;
+    this.ui.scare(null);
     if (this.lives <= 0) { this.state = 'over'; document.exitPointerLock?.(); this.ui.showFail(this.level); return; }
+    this.state = 'play'; this.ui.hud(true);
     this.ui.toast(t('caught'));
     this.player.pos.copy(this.world.start); this.player.grace = 2.5; this.player.dash = 0;
     this.enemies.forEach((e) => e.reset());
+    this.snap = true;
   }
 
   useWeapon() {
@@ -209,14 +226,18 @@ export class Game {
     });
 
     // housekeepers
+    let danger = 0;
     for (const e of this.enemies) {
       const close = e.update(dt, p);
       if (e.spotted) sfx.spotted();
       if (close && p.grace <= 0) {
         if (p.dash > 0) e.stunFor(WEAPONS.types.dash.stun);
-        else if (p.invisible <= 0) { this.caught(); break; }
+        else if (p.invisible <= 0) { this.caught(e); return; }
       }
+      if (!e.dead && e.stun <= 0) danger = Math.max(danger, e.state === 'chase' ? 1 : Math.max(0, 1 - e.pos.distanceTo(p.pos) / 9) * 0.55);
     }
+    this.danger += (danger - this.danger) * Math.min(1, dt * 3);
+    sfx.setDanger(this.danger); this.ui.danger(this.danger);
     w.update(time);
     this.ui.updateHud(this);
     this.ui.minimap(this);
@@ -245,7 +266,7 @@ export class Game {
     document.exitPointerLock?.();
     P.done[this.level] = true;
     P.keys[this.level] = Math.max(P.keys[this.level], this.keysGot);
-    save(); sfx.win();
+    save(); sfx.win(); sfx.setDanger(0);
     this.ui.hud(false);
     if (this.def.final) this.ui.showEnding(); else this.ui.showResult(this.level, this.keysGot);
   }
@@ -255,6 +276,26 @@ export class Game {
     const dt = Math.min(0.05, this.clock.getDelta()), time = this.clock.elapsedTime;
     if (this.world) {
       if (this.state === 'play') this.update(dt, time);
+      if (this.state === 'scare') {
+        this.world.update(time);
+        const e = this.scareEnemy, head = e.model.head.getWorldPosition(new THREE.Vector3());
+        const fwd = new THREE.Vector3(Math.sin(e.yaw), 0, Math.cos(e.yaw));
+        const shake = () => (Math.random() - 0.5) * 0.12;
+        this.camera.position.copy(head).addScaledVector(fwd, 1.5).add(new THREE.Vector3(shake(), shake() - 0.1, shake()));
+        this.camera.lookAt(head);
+        // red under-lighting, horror style
+        this.flash.color.set(0xff2a10); this.flash.intensity = 14;
+        this.flash.position.copy(head).addScaledVector(fwd, 0.9).add(new THREE.Vector3(0, -1, 0)); this.flash.target.position.copy(head);
+        this.aura.intensity = 0;
+        this.camera.fov = 60 - Math.min(1, this.scareT * 4) * 15; this.camera.updateProjectionMatrix();
+        this.renderer.render(this.scene, this.camera);
+        this.updateScare(dt);
+        if (this.state !== 'scare') {
+          this.camera.fov = 60; this.camera.updateProjectionMatrix();
+          this.flash.color.set(0xffe2b0); this.flash.intensity = 90; this.aura.intensity = 10;
+        }
+        return;
+      }
       const p = this.player.pos, w = this.world;
       const target = new THREE.Vector3(p.x, 1.4, p.z);
       // camera collision: if a wall blocks the view, raise the camera over it
@@ -264,7 +305,7 @@ export class Game {
         let blocked = false;
         for (let d = 0.5; d <= dist && !blocked; d += 0.25) {
           const q = target.clone().addScaledVector(dir, d);
-          blocked = q.y < CONFIG.wallHeight + 0.5 && w.solid(w.tile(q.x), w.tile(q.z));
+          blocked = q.y < CONFIG.wallHeight + 1.0 && w.solid(w.tile(q.x), w.tile(q.z));
         }
         if (!blocked) break;
       }

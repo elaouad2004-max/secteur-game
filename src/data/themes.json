@@ -1,0 +1,8 @@
+{
+  "garden":    { "floor": "grass",      "wall": "stone",   "palette": ["#1d3b55", "#d8cdb4"], "furniture": "bush",     "fog": "#0b1218", "moon": 1.6, "particles": "fireflies", "rugs": false },
+  "hall":      { "floor": "zellige",    "wall": "plaster", "palette": ["#1d3b55", "#d8cdb4"], "furniture": "cabinet",  "fog": "#08070a", "moon": 0.5, "particles": "dust",      "rugs": true },
+  "kitchen":   { "floor": "terracotta", "wall": "plaster", "palette": ["#7a3b12", "#e2c48a"], "furniture": "table",    "fog": "#0a0706", "moon": 0.4, "particles": "dust",      "rugs": false },
+  "library":   { "floor": "planks",     "wall": "plaster", "palette": ["#3b2a55", "#c9b48a"], "furniture": "shelf",    "fog": "#07060a", "moon": 0.35, "particles": "dust",     "rugs": true },
+  "courtyard": { "floor": "zellige",    "wall": "plaster", "palette": ["#17402f", "#e8e0c8"], "furniture": "planter",  "fog": "#0a1114", "moon": 1.4, "particles": "fireflies", "rugs": false },
+  "master":    { "floor": "zellige",    "wall": "plaster", "palette": ["#5a1220", "#c9a227"], "furniture": "wardrobe", "fog": "#0c0608", "moon": 0.45, "particles": "dust",     "rugs": true }
+}

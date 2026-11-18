@@ -3,8 +3,10 @@
 A 3D stealth game set in a haunted Moroccan mansion. Your old friends have been cursed and became the **housekeepers**. Sneak through 6 levels, complete the story tasks to earn tokens, collect keys to unlock the next level, and take your home back.
 
 ## Features
-- **3D third-person view** (Three.js): the mansion is built from map data, with a flashlight, fog and lanterns
-- **Character select**: you pick a hero from the uploaded photos and **every other character becomes an evil housekeeper**
+- **3D third-person view** (Three.js): 6 themed areas (garden, hallway, kitchen, library, riad courtyard, master room) with furniture, flickering lanterns, candles, rugs, moonlight shadows, dust and fireflies
+- **Horror audio** (synthesized live): drone and wind, creaks, whispers, a broken music box, a heartbeat that speeds up when housekeepers get close
+- **Jumpscare** when caught: the camera snaps to the housekeeper's face, then a full-screen glitch scare
+- **Character select**: you pick a hero from the uploaded photos (rotating 3D preview) and **every other character becomes an evil housekeeper** with a maid uniform, broom and glowing eyes
 - **Customization**: nickname, outfit color, hat (cap, fez, crown)
 - **Housekeeper AI**: patrols, sees you inside its vision cone, chases you, then searches where it last saw you
 - **6 levels unlocked by keys**: each level has 3 hidden keys, and later levels need more keys in total
@@ -36,7 +38,8 @@ npm run build    # static build in dist/
 public/characters/     character photos (one per playable character)
 public/world/          menu/story background art
 src/data/levels.json   level maps (# wall, o furniture, P start, X exit, T task, K key, H housekeeper)
-src/data/characters.json  roster: name, photo, weapon, color
+src/data/characters.json  roster: name, photo, weapon, color, face crop box
+src/data/themes.json   per-level look: floor, walls, palette, furniture, fog, moonlight, particles
 src/data/weapons.json  weapon stats and how many tasks unlock them
 src/data/config.json   player/housekeeper tuning
 src/data/i18n/*.json   translations (en, fr, ar)
@@ -48,7 +51,7 @@ src/ui.js              menus, HUD, minimap
 ```
 
 ### Adding a character
-Put the photo in `public/characters/` and add a line to `src/data/characters.json`.
+Put the photo in `public/characters/` and add a line to `src/data/characters.json`. `face` is the face box in the photo as fractions `[x, y, width, height]`.
 
 ### Adding a level
 Add an entry to `src/data/levels.json` (24×16 map), then add its name and story to each file in `src/data/i18n/`.

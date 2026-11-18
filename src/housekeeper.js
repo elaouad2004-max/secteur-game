@@ -16,7 +16,8 @@ export class Housekeeper {
     this.path = null; this.repath = 0; this.lost = 0; this.stun = 0;
     this.dead = false; this.deadT = 0;
     this.speedMul = 1 + levelIndex * HK.levelSpeedBonus;
-    this.model = makeCharacter({ photo: char.photo, color: char.color, evil: true });
+    this.char = char;
+    this.model = makeCharacter({ photo: char.photo, color: char.color, evil: true, name: char.name });
     scene.add(this.model.root);
 
     // visible vision cone on the floor
@@ -97,8 +98,5 @@ export class Housekeeper {
     this.model.animate(dt, speed);
   }
 
-  dispose(scene) {
-    scene.remove(this.model.root);
-    this.model.root.traverse((o) => { o.geometry?.dispose(); for (const m of [].concat(o.material || [])) m.dispose(); });
-  }
+  dispose(scene) { scene.remove(this.model.root); this.model.dispose(); }
 }

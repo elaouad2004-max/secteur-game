@@ -1,4 +1,5 @@
 // Menus, HUD and minimap (DOM overlay). Supports EN / FR / AR (right-to-left).
+import { Preview } from './preview.js';
 import { P, save, resetSave, t, isRTL, hero, totalKeys, maxKeys, tasksDone, hasWeapon, isUnlocked, LEVELS, CHARACTERS, CONFIG, WEAPONS } from './state.js';
 
 const $ = (id) => document.getElementById(id);
@@ -9,6 +10,8 @@ export class UI {
   constructor() {
     this.root = $('ui'); this.hudEl = $('hud'); this.promptEl = $('prompt'); this.mapEl = $('minimap');
     this.mctx = this.mapEl.getContext('2d');
+    this.preview = new Preview();
+    this.vig = $('vignette'); this.scareEl = $('scare');
     this.root.addEventListener('click', (e) => {
       const b = e.target.closest('[data-act]');
       if (b && !b.disabled && !b.classList.contains('lock')) this.act(b.dataset.act, b.dataset.arg);
@@ -54,16 +57,17 @@ export class UI {
   }
 
   showChars() {
-    this.screen(`<h2>${esc(t('chars'))}</h2><p>${esc(t('charsHint'))}</p>
+    this.screen(`<h2>${esc(t('chars'))}</h2><p>${esc(t('charsHint'))}</p><div id="pv"></div>
       <div class="grid">${CHARACTERS.map((c) => `<div class="card ${P.char === c.id ? 'sel' : ''}" data-act="pick" data-arg="${c.id}">
         <img src="${encodeURI(c.photo)}" alt=""><b>${esc(c.name)}</b><small>⚔ ${esc(t('w')[c.weapon])}</small></div>`).join('')}</div>
       ${this.btn(t('back'), 'menu')}${this.btn(t('next'), 'custom', '', P.char ? '' : 'disabled')}`, BG.mansion);
+    const h = hero(); if (h) this.preview.show($('pv'), { photo: h.photo, color: P.color, hat: P.hat, name: P.nick || h.name });
   }
 
   showCustom() {
     const h = hero();
     this.screen(`<h2>${esc(t('custom'))}</h2>
-      <div class="custom"><img class="portrait" src="${encodeURI(h.photo)}" alt="">
+      <div class="custom"><div id="pv"></div>
       <div>
         <div class="row">${esc(t('name'))}: <input id="nick" maxlength="14" value="${esc(P.nick)}"></div>
         <div class="row">${esc(t('outfit'))}: ${CONFIG.outfitColors.map((c) => `<span class="sw ${P.color === c ? 'sel' : ''}" style="background:${c}" data-act="color" data-arg="${c}"></span>`).join('')}</div>
@@ -71,7 +75,8 @@ export class UI {
         <p>${esc(t('wInfo').replace('{n}', WEAPONS.unlockAfterTasks))}<b>${esc(t('w')[h.weapon])}</b>, ${esc(t('wd')[h.weapon])}.</p>
       </div></div>
       ${this.btn(t('back'), 'chars')}${this.btn(t('next'), 'levels')}`, BG.mansion);
-    $('nick').addEventListener('input', (e) => { P.nick = e.target.value; save(); });
+    $('nick').addEventListener('change', (e) => { P.nick = e.target.value; save(); this.showCustom(); });
+    this.preview.show($('pv'), { photo: h.photo, color: P.color, hat: P.hat, name: P.nick || h.name });
   }
 
   showLevels() {
@@ -104,6 +109,7 @@ export class UI {
   // ---------------- in-game ----------------
   hud(on) {
     for (const el of [this.hudEl, this.mapEl]) el.classList.toggle('hidden', !on);
+    if (!on) this.danger(0);
     if (!on) this.prompt('');
   }
   updateHud(g) {
@@ -113,6 +119,14 @@ export class UI {
       : `⚔ ${t('weapon')} ${t('locked')} ${Math.min(tasksDone(), WEAPONS.unlockAfterTasks)}/${WEAPONS.unlockAfterTasks}`;
     const txt = `${P.nick ? P.nick + '  ·  ' : ''}${t('lv')[g.level].n}  ·  ${t('tokens')} ${g.tokens}/${g.world.tasks.length}  ·  🔑 ${g.keysGot}/${g.world.keys.length}  ·  ${'❤️'.repeat(g.lives)}  ·  ${w}`;
     if (txt !== this.lastHud) { this.hudEl.textContent = txt; this.lastHud = txt; }
+  }
+  danger(d) { const o = (d * 0.85).toFixed(2); if (o !== this.lastVig) { this.vig.style.opacity = o; this.lastVig = o; } }
+  scare(photo) {
+    if (!photo) { this.scareEl.classList.add('hidden'); return; }
+    this.scareEl.querySelectorAll('.face').forEach((f) => (f.style.backgroundImage = `url("${encodeURI(photo)}")`));
+    this.scareEl.classList.remove('hidden');
+    this.scareEl.querySelectorAll('.face, .word').forEach((el) => { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; });
+    this.scareEl.querySelector('.word').textContent = t('caught');
   }
   prompt(s) { if (s !== this.lastPrompt) { this.promptEl.textContent = s; this.promptEl.classList.toggle('hidden', !s); this.lastPrompt = s; } }
   toast(s) {
