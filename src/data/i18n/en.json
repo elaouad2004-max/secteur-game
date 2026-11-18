@@ -8,7 +8,7 @@
   "tokens": "Tokens", "weapon": "Weapon", "locked": "locked", "ready": "READY",
   "caught": "A housekeeper caught you!", "failed": "You were caught too many times...", "retry": "Retry",
   "cleared": "Level cleared!", "exitOpen": "All tasks done, reach the door!",
-  "help": "Click to lock mouse · Mouse: camera · WASD: move · Shift: run · E: interact · Space: weapon · Esc: pause",
+  "help": "Click to lock mouse · Mouse: camera · Arrows: move · Shift: run · E: interact · Space: weapon · Esc: pause",
   "unlockW": "Weapon unlocked: ", "wInfo": "Special weapon (unlocks after {n} tasks): ",
   "taskDone": "+1 token", "key": "Key found!", "dead": "The housekeepers turn to dust!",
   "menu": "Menu", "hero": "Change hero", "resume": "Resume", "pause": "Paused",

@@ -68,6 +68,7 @@ export class Game {
   onKey(e, down) {
     this.keys[e.code] = down;
     if (!down || this.state !== 'play') return;
+    if (e.code.startsWith('Arrow')) e.preventDefault();
     if (e.code === 'KeyE') this.wantInteract = true;
     if (e.code === 'Space') { e.preventDefault(); this.useWeapon(); }
     if (e.code === 'Escape' || e.code === 'KeyP') this.pause();
@@ -177,10 +178,9 @@ export class Game {
     p.invisible = Math.max(0, p.invisible - dt); p.dash = Math.max(0, p.dash - dt); p.grace = Math.max(0, p.grace - dt);
 
     // camera-relative movement
-    if (k.ArrowLeft) this.yaw += dt * 2.2;
-    if (k.ArrowRight) this.yaw -= dt * 2.2;
-    const f = (k.KeyW || k.KeyZ || k.ArrowUp ? 1 : 0) - (k.KeyS || k.ArrowDown ? 1 : 0);
-    const s = (k.KeyD ? 1 : 0) - (k.KeyA || k.KeyQ ? 1 : 0);
+    // movement on the arrow keys (camera follows the mouse)
+    const f = (k.ArrowUp ? 1 : 0) - (k.ArrowDown ? 1 : 0);
+    const s = (k.ArrowRight ? 1 : 0) - (k.ArrowLeft ? 1 : 0);
     let speed = 0;
     if (f || s) {
       const fx = -Math.sin(this.yaw), fz = -Math.cos(this.yaw); // forward = away from camera

@@ -8,7 +8,7 @@
   "tokens": "Jetons", "weapon": "Arme", "locked": "verrouillée", "ready": "PRÊTE",
   "caught": "Un gardien t'a attrapé !", "failed": "Attrapé trop de fois...", "retry": "Réessayer",
   "cleared": "Niveau terminé !", "exitOpen": "Tâches finies, va à la porte !",
-  "help": "Clique pour capturer la souris · Souris : caméra · ZQSD/WASD : bouger · Maj : courir · E : interagir · Espace : arme · Échap : pause",
+  "help": "Clique pour capturer la souris · Souris : caméra · Flèches : bouger · Maj : courir · E : interagir · Espace : arme · Échap : pause",
   "unlockW": "Arme débloquée : ", "wInfo": "Arme spéciale (après {n} tâches) : ",
   "taskDone": "+1 jeton", "key": "Clé trouvée !", "dead": "Les gardiens tombent en poussière !",
   "menu": "Menu", "hero": "Changer de héros", "resume": "Reprendre", "pause": "Pause",

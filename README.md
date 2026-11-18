@@ -19,8 +19,8 @@ A 3D stealth game set in a haunted Moroccan mansion. Your old friends have been 
 | Key | Action |
 |---|---|
 | Click | Lock the mouse |
-| Mouse / ← → | Turn the camera |
-| WASD / ZQSD / ↑ ↓ | Move |
+| Mouse | Turn the camera |
+| Arrow keys ↑ ↓ ← → | Move |
 | Shift | Run |
 | E | Interact with a task |
 | Space | Use your weapon |
