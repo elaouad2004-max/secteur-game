@@ -35,6 +35,10 @@ export class Game {
 
     this.keys = {};
     this.yaw = Math.PI; this.pitch = 0.75;
+    this.view = 'third'; // 'third' = behind your back, 'first' = through your eyes
+    // right-click toggles the view, mouse wheel: up = first person, down = behind your back
+    canvas.addEventListener('contextmenu', (e) => { e.preventDefault(); if (this.state === 'play') this.setView(this.view === 'first' ? 'third' : 'first'); });
+    canvas.addEventListener('wheel', (e) => { if (this.state === 'play') this.setView(e.deltaY < 0 ? 'first' : 'third'); }, { passive: true });
     this.state = 'idle';
     this.clock = new THREE.Clock();
     this.fx = [];
@@ -110,6 +114,13 @@ export class Game {
     this.projectiles.forEach((p) => this.scene.remove(p.mesh));
     this.fx.forEach((f) => this.scene.remove(f.mesh));
     this.fx = []; this.world = null;
+  }
+
+  setView(v) {
+    if (v === this.view) return;
+    this.view = v; this.snap = true;
+    if (v === 'third') this.pitch = Math.max(this.pitch, 0.5);
+    this.ui.toast(t(v === 'first' ? 'viewFirst' : 'viewThird'));
   }
 
   pause() {
@@ -192,7 +203,8 @@ export class Game {
     }
     const m = p.model;
     m.root.position.copy(p.pos); m.root.rotation.y = p.yaw; m.animate(dt, speed);
-    m.root.visible = !(p.grace > 0 && Math.floor(time * 8) % 2);
+    m.root.visible = this.view !== 'first' && !(p.grace > 0 && Math.floor(time * 8) % 2);
+    if (this.view === 'first') p.yaw = Math.atan2(-Math.sin(this.yaw), -Math.cos(this.yaw)); // body faces where you look
     m.setOpacity(p.invisible > 0 ? 0.3 : 1);
 
     // keys
@@ -297,6 +309,19 @@ export class Game {
         return;
       }
       const p = this.player.pos, w = this.world;
+      if (this.view === 'first') { // through the hero's eyes
+        const look = this.pitch - 0.75, fx = -Math.sin(this.yaw), fz = -Math.cos(this.yaw);
+        const eye = new THREE.Vector3(p.x, 1.85 + this.player.model.root.children[0].position.y, p.z);
+        this.camera.position.copy(eye).addScaledVector(new THREE.Vector3(fx, 0, fz), 0.15);
+        this.camera.lookAt(eye.x + fx * Math.cos(look) * 5, eye.y - Math.sin(look) * 5, eye.z + fz * Math.cos(look) * 5);
+        this.flash.position.copy(this.camera.position).setY(eye.y - 0.3);
+        this.flash.target.position.set(eye.x + fx * 6, eye.y - Math.sin(look) * 6 - 0.8, eye.z + fz * 6);
+        this.aura.position.set(p.x, 2.6, p.z);
+        this.flash.intensity = 40; this.aura.intensity = 1.5; // softer: the light is right at your eyes
+        this.renderer.render(this.scene, this.camera);
+        return;
+      }
+      if (this.state !== 'scare') { this.flash.intensity = 90; this.aura.intensity = 10; }
       const target = new THREE.Vector3(p.x, 1.4, p.z);
       // camera collision: if a wall blocks the view, raise the camera over it
       const dist = 8, dir = new THREE.Vector3();

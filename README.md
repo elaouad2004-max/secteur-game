@@ -20,6 +20,7 @@ A 3D stealth game set in a haunted Moroccan mansion. Your old friends have been 
 |---|---|
 | Click | Lock the mouse |
 | Mouse | Turn the camera |
+| Right click / mouse wheel | Switch between first person (your eyes) and third person (behind your back) |
 | Arrow keys ↑ ↓ ← → | Move |
 | Shift | Run |
 | E | Interact with a task |
