@@ -1,4 +1,5 @@
 // Core 3D game: renderer, camera, input, player, weapons and level flow.
+import { IS_TOUCH } from './touch.js';
 import * as THREE from 'three';
 import { P, save, t, hero, hasWeapon, LEVELS, CHARACTERS, CONFIG, WEAPONS } from './state.js';
 import { World } from './world.js';
@@ -13,7 +14,7 @@ export class Game {
     this.ui = ui;
     this.canvas = canvas;
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio, IS_TOUCH ? 1.25 : 2)); // lighter on phones
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -100,7 +101,8 @@ export class Game {
     this.hemi.intensity = 0.7; this.scene.fog.density = 0.03; this.danger = 0;
     sfx.levelStart();
     this.state = 'play';
-    this.keys = {};
+    this.keys = {}; this.touchRun = false;
+    document.querySelector('[data-b=run]')?.classList.remove('on');
     this.lockedOnce = false;
     this.snap = true;
     this.ui.hud(true);
@@ -125,7 +127,7 @@ export class Game {
 
   pause() {
     if (this.state !== 'play') return;
-    this.state = 'pause'; this.keys = {};
+    this.state = 'pause'; this.keys = {}; document.body.classList.remove('playing');
     document.exitPointerLock?.();
     this.ui.showPause();
   }
@@ -190,14 +192,15 @@ export class Game {
 
     // camera-relative movement
     // movement on the arrow keys (camera follows the mouse)
-    const f = (k.ArrowUp ? 1 : 0) - (k.ArrowDown ? 1 : 0);
-    const s = (k.ArrowRight ? 1 : 0) - (k.ArrowLeft ? 1 : 0);
+    const tm = this.touchMove || { x: 0, y: 0 };
+    const f = THREE.MathUtils.clamp((k.ArrowUp ? 1 : 0) - (k.ArrowDown ? 1 : 0) + tm.y, -1, 1);
+    const s = THREE.MathUtils.clamp((k.ArrowRight ? 1 : 0) - (k.ArrowLeft ? 1 : 0) + tm.x, -1, 1);
     let speed = 0;
-    if (f || s) {
+    if (Math.hypot(f, s) > 0.15) {
       const fx = -Math.sin(this.yaw), fz = -Math.cos(this.yaw); // forward = away from camera
       let mx = fx * f - fz * s, mz = fz * f + fx * s;
       const l = Math.hypot(mx, mz); mx /= l; mz /= l;
-      speed = PL.speed * (k.ShiftLeft || k.ShiftRight ? 1.45 : 1) * (p.dash > 0 ? WEAPONS.types.dash.speedMul : 1);
+      speed = PL.speed * Math.min(1, Math.hypot(f, s)) * (k.ShiftLeft || k.ShiftRight ? 1.45 : 1) * (p.dash > 0 ? WEAPONS.types.dash.speedMul : 1);
       w.move(p.pos, mx * speed * dt, mz * speed * dt, PL.radius);
       p.yaw += Math.atan2(Math.sin(Math.atan2(mx, mz) - p.yaw), Math.cos(Math.atan2(mx, mz) - p.yaw)) * Math.min(1, dt * 12);
     }

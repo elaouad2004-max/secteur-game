@@ -1,4 +1,5 @@
 // Menus, HUD and minimap (DOM overlay). Supports EN / FR / AR (right-to-left).
+import { IS_TOUCH } from './touch.js';
 import { Preview } from './preview.js';
 import { P, save, resetSave, t, isRTL, hero, totalKeys, maxKeys, tasksDone, hasWeapon, isUnlocked, LEVELS, CHARACTERS, CONFIG, WEAPONS } from './state.js';
 
@@ -92,9 +93,9 @@ export class UI {
 
   showStory(i) {
     this.screen(`<h2>${i + 1}. ${esc(t('lv')[i].n)}</h2><p class="story">${esc(t('lv')[i].s)}</p>
-      <p class="help">${esc(t('help'))}</p>${this.btn(t('back'), 'levels')}${this.btn(t('start'), 'start', i)}`, BG.hallway);
+      <p class="help">${esc(t(IS_TOUCH ? 'helpTouch' : 'help'))}</p>${this.btn(t('back'), 'levels')}${this.btn(t('start'), 'start', i)}`, BG.hallway);
   }
-  showPause() { this.screen(`<h2>${esc(t('pause'))}</h2><p class="help">${esc(t('help'))}</p>${this.btn(t('resume'), 'resume')}${this.btn(t('levels'), 'levels')}`); }
+  showPause() { this.screen(`<h2>${esc(t('pause'))}</h2><p class="help">${esc(t(IS_TOUCH ? 'helpTouch' : 'help'))}</p>${this.btn(t('resume'), 'resume')}${this.btn(t('levels'), 'levels')}`); }
   showFail(i) { this.screen(`<h2>${esc(t('failed'))}</h2>${this.btn(t('levels'), 'levels')}${this.btn(t('retry'), 'start', i)}`, BG.hallway); }
   showResult(i, got) {
     this.screen(`<h2>${esc(t('cleared'))}</h2><p>${esc(t('earned'))}: ${'🔑'.repeat(got)}${'▫️'.repeat(3 - got)}</p>
@@ -109,6 +110,7 @@ export class UI {
   // ---------------- in-game ----------------
   hud(on) {
     for (const el of [this.hudEl, this.mapEl]) el.classList.toggle('hidden', !on);
+    document.body.classList.toggle('playing', on);
     if (!on) this.danger(0);
     if (!on) this.prompt('');
   }

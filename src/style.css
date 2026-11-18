@@ -65,3 +65,28 @@ p.story { font-size: 19px; line-height: 1.7; } p.help { opacity: .75; font-size:
 @keyframes scareWord { 0%, 20% { opacity: 0; } 30% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
 
 @media (max-width: 700px) { #hud { font-size: 11px; white-space: normal; width: calc(100% - 32px); text-align: center; } #minimap { width: 120px; } }
+
+/* ---------- phone / touch controls ---------- */
+#touch { display: none; }
+body.touch.playing #touch { display: block; }
+body.touch { touch-action: none; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
+#stick { position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: 24px; width: 130px; height: 130px; border-radius: 50%; background: rgba(0,0,0,.35); border: 2px solid rgba(233,180,76,.5); z-index: 5; touch-action: none; }
+#knob { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; background: rgba(233,180,76,.75); box-shadow: 0 0 12px #000; }
+.tb { position: fixed; z-index: 5; width: 64px; height: 64px; border-radius: 50%; border: 2px solid rgba(233,180,76,.7); background: rgba(0,0,0,.5); color: #f3e2c0; font: bold 22px system-ui; touch-action: none; padding: 0; }
+.tb:active, .tb.on { background: rgba(233,180,76,.8); color: #1a120a; }
+.tb.small { width: 46px; height: 46px; font-size: 16px; }
+.tb[data-b=use] { right: max(96px, env(safe-area-inset-right)); bottom: 30px; }
+.tb[data-b=weapon] { right: max(22px, env(safe-area-inset-right)); bottom: 96px; }
+.tb[data-b=run] { right: max(22px, env(safe-area-inset-right)); bottom: 24px; }
+.tb[data-b=pause] { right: 14px; top: 12px; }
+.tb[data-b=view] { right: 68px; top: 12px; }
+body.touch #minimap { right: auto; left: 12px; top: 12px; bottom: auto; width: 110px; }
+body.touch #prompt { bottom: 170px; }
+body.touch #toast { bottom: 170px; }
+body.touch #hud { top: 64px; }
+@media (max-width: 700px), (max-height: 500px) {
+  .panel { padding: 12px; max-height: 96vh; }
+  h1 { font-size: 30px; } p.story { font-size: 15px; }
+  .preview3d { width: 180px; height: 220px; }
+  .portrait { width: 110px; }
+}

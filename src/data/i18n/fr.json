@@ -9,6 +9,7 @@
   "caught": "Un gardien t'a attrapé !", "failed": "Attrapé trop de fois...", "retry": "Réessayer",
   "cleared": "Niveau terminé !", "exitOpen": "Tâches finies, va à la porte !",
   "help": "Clique pour capturer la souris · Souris : caméra · Flèches : bouger · Maj : courir · E : interagir · Espace : arme · Clic droit / molette : changer de vue · Échap : pause",
+  "helpTouch": "Joystick gauche : bouger (au bord pour courir) · Glisse l'écran : regarder · E : interagir · ⚡ : arme · 👁 : changer de vue · II : pause",
   "viewFirst": "Vue à la première personne", "viewThird": "Vue de dos (troisième personne)",
   "unlockW": "Arme débloquée : ", "wInfo": "Arme spéciale (après {n} tâches) : ",
   "taskDone": "+1 jeton", "key": "Clé trouvée !", "dead": "Les gardiens tombent en poussière !",

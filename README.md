@@ -27,6 +27,8 @@ A 3D stealth game set in a haunted Moroccan mansion. Your old friends have been 
 | Space | Use your weapon |
 | Esc / P | Pause |
 
+**On a phone** (turn it sideways): left joystick to move (push it to the edge to run), drag the screen to look around, **E** to interact, ⚡ weapon, 🏃 run toggle, 👁 switch view, **II** pause.
+
 ## Run it
 ```bash
 npm install

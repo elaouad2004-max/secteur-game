@@ -9,6 +9,7 @@
   "caught": "A housekeeper caught you!", "failed": "You were caught too many times...", "retry": "Retry",
   "cleared": "Level cleared!", "exitOpen": "All tasks done, reach the door!",
   "help": "Click to lock mouse · Mouse: camera · Arrows: move · Shift: run · E: interact · Space: weapon · Right click / wheel: switch view · Esc: pause",
+  "helpTouch": "Left stick: move (push to the edge to run) · Drag the screen: look · E: interact · ⚡: weapon · 👁: switch view · II: pause",
   "viewFirst": "First person view", "viewThird": "Third person view (behind you)",
   "unlockW": "Weapon unlocked: ", "wInfo": "Special weapon (unlocks after {n} tasks): ",
   "taskDone": "+1 token", "key": "Key found!", "dead": "The housekeepers turn to dust!",
